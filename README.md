@@ -1,3 +1,7 @@
+# CDN - dev #
+
+https://rawgit.com/martin-dako/Traya/master/traya/traya.js
+
 # Idea #
 
 * have components with HTML[skeleton] and JS[what to do]
