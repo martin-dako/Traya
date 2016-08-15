@@ -240,3 +240,15 @@ function clickController(handler)
 <include src="path"></include>
 
 ```
+
+
+# HTML Include with route #
+
+If route in address bar is same like route attribute value - include will be rendered
+
+
+```
+#!html
+<include src="path" route="/message"></include>
+
+```
