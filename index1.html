@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
+    <script src="traya/traya.js"></script>
+    <script src="traya-controller.js"></script>
+    <meta charset="UTF-8">
+    <title>Traya test</title>
+</head>
+<body>
+
+<!--
+<div controller="alpha">
+    <button controller="nested" ajax="google.hr" quantity="many" type="click" method="GET" data="varszzz" model="myModel">a ME!</button>
+    <button controller="nested" ajax="google.hr" quantity="many" type="click" method="GET" data="varszzz" model="myModel">b ME!</button>
+    <button controller="nested" ajax="google.hr" quantity="many" type="click" method="GET" data="varszzz" model="myModel">c ME!</button>
+    <button controller="nested" ajax="google.hr" quantity="many" type="click" method="GET" data="varszzz" model="myModel">d ME!</button>
+
+<br>
+
+
+</div>
+
+<div id="result"></div>
+-->
+
+<div controller="printText" type="invoke">ovo je identifikacija: {{id}} i master naslova: {{title}}
+
+</div>
+
+<button controller="handleText" type="click">Click me :) {{nomen}}</button>
+<button controller="handleText2" type="click">Click me :)</button>
+
+<a href="#/message">bla bla bla</a>
+<a href="#/calendar">cal</a>
+
+<br>
+<br>
+<include src="util/calendar.html" route="/calendar"></include>
+<include src="util/calendar.html" route="/message"></include>
+
+
+</body>
+</html>

@@ -1,0 +1,8 @@
+{
+  name : "Ricky",
+  surname : "Martin",
+  load : {
+    image1 : "jpg",
+    image2 : "png"
+  }
+}

@@ -1,0 +1,98 @@
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+    <script>
+
+        var currentLocation = "";
+        var route = "";
+        var registeredRoutes = [];
+
+        function addRoute(route, controller, container)
+        {
+            registeredRoutes.push({route: route, controller: controller, container: container});
+        }
+
+        //ovo ide u controller na vrh! -> u ovoj metodi se rute registriraju addRoute(ruta, koji_kontroler_se_pozove(invoke kontroller), koji_div_je_kontejner)
+        function router()
+        {
+            addRoute("/profiles", "profileController", "customRouter");
+            addRoute("/messages", "messageController"); //ako nema ništa ide u <div router> </div>
+        }
+
+
+        function profileController(handler)
+        {
+            $(".router").html("OVO JE PROFIL <a  href='#/messages'>Poruke</a>");
+            console.log("poruke");
+        }
+
+        function messageController(handler)
+        {
+            $(".router").html("OVO JE PORUKA <a  href='#/profiles'>Profili</a>");
+            console.log("profili");
+        }
+
+
+        function handleRoutes()
+        {
+            currentLocation = window.location + "";
+            route = currentLocation.split("#")[1];
+
+            registeredRoutes.forEach(function(element) {
+
+                if(route == element.route)
+                {
+
+                    window[element.controller]("DOHVATI HANDLER"); //ovdje ce ici invoke
+
+                    var routeContainer = "router";
+                    if(typeof(element.container) !== "undefined")
+                    {
+                        routeContainer = element.container;
+                    }
+
+                    $("[" + routeContainer + "]").html("TU NAPRAVI INJECT");
+
+                    //invoke(element.controller);
+
+                }
+            });
+        }
+
+
+        $(document).ready(function(e){
+
+            $(window).bind('hashchange', function() {
+                handleRoutes();
+            });
+            router(); //registriraj rute
+
+            handleRoutes();
+
+
+
+        });
+
+
+
+
+
+    </script>
+</head>
+
+<body>
+
+<div router>
+
+</div>
+
+<div customRouter>
+
+</div>
+
+
+
+</body>
+
+</html>

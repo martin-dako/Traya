@@ -1,0 +1,39 @@
+<div>
+    <div controller="cal" type="invoke">
+        {{id}} : {{title}} xxxxxxx
+    </div>
+
+    <button controller="setCal" type="click">Set</button>
+</div>
+
+<div controller="initial">{{xdxxd}}</div> bulja
+
+<include src="../plugins/datepicker/datepicker.html"></include>
+
+<script>
+
+    function initial(handler)
+    {
+        _cal.id = "inkludaaan xDxD";
+        _initial.xdxxd = "aaaaaaaaaa";
+        bindMemory(handler);
+    }
+
+    function cal(handler)
+    {
+       bindMemory(handler);
+    }
+
+    function setCal(handler)
+    {
+        _cal.id = "127001";
+        _cal.title = "lenny kravitz";
+
+
+
+        console.log(memory);
+        invoke("cal");
+    }
+
+    //console.log(trayaCore.data.controllers);
+</script>
