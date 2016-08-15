@@ -237,49 +237,25 @@ var trayaCore = {
 
             var src =  url  + sufix;
 
-        if(typeof route != "undefined")
-        {
-            var registeredHtml = "";
+
+
             registeredHtml = include[0].outerHTML;
 
             //console.log(registeredHtml);
 
-            var currentRoute = window.location.href.split("#")[1];
-            if(currentRoute.startsWith(route))
+
+            var display = "block;"
+            if(typeof route != "undefined")
             {
-                include = $("<div controller='"+ src.replaceAll("/", "_").replaceAll("\\.", "_") +"' type='load' ajax='" + src + "'>" + include.html() +"</div>").replaceAll(include); //ovo je rjesenje
-
+                display = "none";
+                //routeConfigBase.push({route: route, include: include, src: src, original: registeredHtml});
             }
 
-           //routeConfigBase.push({route: route, include: include, src: src, original: registeredHtml});
-
-
-
-            var found = false;
-            for(var i = 0; i < routeConfigBase.length; i++) {
-                if (routeConfigBase[i].original == registeredHtml) {
-
-                    found = true;
-                    break;
-                }
-            }
-
-            if(!found)
+            include = $("<div style='display: " + display +";' controller='"+ src.replaceAll("/", "_").replaceAll("\\.", "_") +"' type='load' ajax='" + src + "'>" + include.html() +"</div>").replaceAll(include); //ovo je rjesenje
+            if(typeof route != "undefined")
             {
                 routeConfigBase.push({route: route, include: include, src: src, original: registeredHtml});
             }
-
-
-
-
-        }
-        else
-        {
-            include = $("<div controller='"+ src.replaceAll("/", "_").replaceAll("\\.", "_") +"' type='load' ajax='" + src + "'>" + include.html() +"</div>").replaceAll(include); //ovo je rjesenje
-
-        }
-
-
 
 
     },
@@ -385,6 +361,9 @@ var trayaCore = {
 
                     //this function is like constructor
                     //trayaCore.callController(controller.name);
+
+                    //refresh routes
+                    router.routerHandler();
                 }
             });
 
@@ -705,80 +684,27 @@ var router = {
         return htmlString;
     },
 
-    routerHandler: function()
-    {
-        var route = window.location.href.split("#")[1];
+    routerHandler: function() {
 
-       // console.log(routeConfigBase);
+
+
+
+        var route = window.location.href.split("#")[1];
         routeConfigBase.forEach(function(entry){
 
-            if(route.startsWith(entry.route))
-            {
-                entry.include = $("<div routeloader='true' controller='"+ entry.src.replaceAll("/", "_").replaceAll("\\.", "_") +"' type='load' ajax='" + entry.src + "'>" + entry.include.html() +"</div>").replaceAll(entry.include);
 
+        if(route.startsWith(entry.route))
+        {
+           entry.include.attr("style", "display: block");
+        }
+        else
+        {
+            entry.include.attr("style", "display: none");
+        }
 
-
-                //async load for route loader
-
-
-                var src = entry.include.attr("ajax");
-                $.ajax({
-                    type: "GET",
-                    url: src,
-                    success: function (result) {
-
-                        result = router.srcHandler(result, src);
-                        //replace <script src=""> with absolute/relative path
-
-
-
-
-
-                        //entry.include = $(result).replaceAll(entry.include); //ovo je rjesenje
-                        entry.include.html(result);
-
-
-                        //transform includes
-                        console.log(entry.include[0].outerHTML);
-                        entry.include.find("include").each(function (index) {
-
-                            var includeDOM = $(this);
-
-                            trayaCore.includeTransform(src, includeDOM);
-
-                        });
-
-
-                        //register controllers
-                        entry.include.find("[controller]").each(function (index) {
-
-                            var controllerDOM = $(this);
-
-                            trayaCore.registerController(controllerDOM);
-
-
-
-                        });
-
-                        //this function is like constructor
-                        // trayaCore.callController(controller.name);
-                    }
-                });
-
-
-
-
-
-
-
-            }
-            else
-            {
-
-                entry.include = $(entry.original).replaceAll(entry.include);
-            }
 
         });
+
     }
 
 
@@ -801,3 +727,4 @@ $(document).ready(function(e){
 });
 
 //problem kod include->include->include : treceg ne vidi :/
+// napravi samo display: none na sve elemente i pokaži ih naknadno
